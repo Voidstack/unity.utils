@@ -22,6 +22,7 @@ public class AnimEmoteSelector : StateMachineBehaviour
     {
         isActive = true;
         this.myAnimator = this.myAnimator ? this.myAnimator : animator;
+        myRac = this.myAnimator.runtimeAnimatorController;
         AnimatorOverrideController aoc = new AnimatorOverrideController(myRac);
         aoc[myAnimator.GetNextAnimatorClipInfo(0)[0].clip.name] = GetAnimationClip;
         myAnimator.runtimeAnimatorController = aoc;
