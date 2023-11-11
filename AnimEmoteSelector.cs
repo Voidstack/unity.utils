@@ -22,8 +22,9 @@ public class AnimEmoteSelector : StateMachineBehaviour
     {
         isActive = true;
         this.myAnimator = this.myAnimator ? this.myAnimator : animator;
-        myRac = this.myAnimator.runtimeAnimatorController;
-        AnimatorOverrideController aoc = new AnimatorOverrideController(myRac);
+        myRac = myAnimator.runtimeAnimatorController;
+
+        AnimatorOverrideController aoc = new AnimatorOverrideController(this.myAnimator.runtimeAnimatorController);
         aoc[myAnimator.GetNextAnimatorClipInfo(0)[0].clip.name] = GetAnimationClip;
         myAnimator.runtimeAnimatorController = aoc;
     }
@@ -37,9 +38,15 @@ public class AnimEmoteSelector : StateMachineBehaviour
     public void UpdateStateClip()
     {
         if (myAnimator == null || isActive == false) return;
-        AnimatorOverrideController aoc = new AnimatorOverrideController(myRac);
+
+        // idk why but it works only like this :/ (at least it works)
+        AnimatorOverrideController aoc = new AnimatorOverrideController(this.myAnimator.runtimeAnimatorController);
         aoc[myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name] = GetAnimationClip;
         myAnimator.runtimeAnimatorController = aoc;
+
+        AnimatorOverrideController aoc2 = new AnimatorOverrideController(this.myAnimator.runtimeAnimatorController);
+        aoc2[myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name] = GetAnimationClip;
+        myAnimator.runtimeAnimatorController = aoc2;
     }
 
     #region GETTER SETTER
